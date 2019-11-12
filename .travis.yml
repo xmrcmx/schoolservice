@@ -6,7 +6,7 @@ services:
 - docker
 
 script:
-- "./mvnw clean install -B"
+- "./mvnw clean install -B -DskipTests"
 
 after_success:
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
