@@ -5,7 +5,7 @@ jdk: openjdk8
 services:
 - docker
 
-install: true
+install: /bin/true
 
 script: 
 - ./mvnw package -DskipTests
