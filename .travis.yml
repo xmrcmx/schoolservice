@@ -5,6 +5,8 @@ jdk: openjdk8
 services:
 - docker
 
+install: true
+
 script: mvn package -DskipTests
 
 after_success:
