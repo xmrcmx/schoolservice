@@ -5,8 +5,7 @@ jdk: openjdk8
 services:
 - docker
 
-script:
-- "mvn clean install -DskipTests=true -B"
+script: mvn package -DskipTests
 
 after_success:
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
