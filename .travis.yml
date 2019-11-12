@@ -1,0 +1,22 @@
+sudo: required
+language: java
+jdk: openjdk8
+
+services:
+- docker
+
+script:
+- "./mvnw clean install -B"
+
+after_success:
+- docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+- docker build -t xmrcmx/school-service:latest .
+- docker push xmrcmx/school-service:latest
+- openssl aes-256-cbc -K $encrypted_e9ccce89ef4d_key -iv $encrypted_e9ccce89ef4d_iv
+  -in deploy_key.enc -out ./deploy_key -d
+
+- eval "$(ssh-agent -s)"
+- chmod 600 ./deploy_key
+- echo -e "Host 172.105.65.197\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+- scp -i ./deploy_key docker-compose.yml root@172.105.65.197:/
+- ssh -i ./deploy_key root@172.105.65.197 ls
